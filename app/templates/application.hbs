@@ -1,0 +1,18 @@
+{{#paper-sidenav-container class="inner-sidenav"}}
+   {{partial 'sidenav-left'}}
+    <div layout="column" tabindex="-1" role="main" flex>
+        {{#paper-toolbar}}
+            {{#paper-toolbar-tools}}
+                {{#paper-sidenav-toggle name="left" class="hide-gt-sm" as |toggleAction|}}
+                    {{#paper-button iconButton=true onClick=(action toggleAction)}}
+                        {{paper-icon "menu"}}
+                    {{/paper-button}}
+                {{/paper-sidenav-toggle}}
+            {{/paper-toolbar-tools}}
+        {{/paper-toolbar}}
+        
+        {{#paper-content }}
+         {{outlet}}
+        {{/paper-content}}
+    </div>
+ {{/paper-sidenav-container}}
