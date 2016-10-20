@@ -1,13 +1,15 @@
 {{#paper-sidenav-container class="inner-sidenav"}}
    {{partial 'sidenav-left'}}
-    <div layout="column" tabindex="-1" role="main" flex>
+    <div layout="column" role="main" flex>
         {{#paper-toolbar}}
             {{#paper-toolbar-tools}}
-                {{#paper-sidenav-toggle name="left" class="hide-gt-sm" as |toggleAction|}}
+                {{#paper-sidenav-toggle name="left" class="hide-gt-sm flex-none" as |toggleAction|}}
                     {{#paper-button iconButton=true onClick=(action toggleAction)}}
                         {{paper-icon "menu"}}
                     {{/paper-button}}
-                {{/paper-sidenav-toggle}}
+                {{/paper-sidenav-toggle}}                   
+                {{paper-input placeholder="Search by tags" type="text" value='' onChange=(action (mut user.phone)) iconRight="search"  class="flex"}}
+        
             {{/paper-toolbar-tools}}
         {{/paper-toolbar}}
         

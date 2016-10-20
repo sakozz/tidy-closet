@@ -1,4 +1,16 @@
+// Define desired color palettes.
+$primary: "blue-grey";
+$accent: "light-green";
+$warn: "pink";
+
+// If desired, import the palettes and modify to your liking.
+@import "color-palette";
+$color-teal: map-merge($color-teal, ('contrast':  $light-contrast-color));
+$color-light-green: map-merge($color-light-green, ('contrast':  $light-contrast-color));
+
 @import 'ember-paper';
-.card{
-   display: -webkit-flex;
+
+a.linked-card{
+	color: inherit;
+	text-decoration: none;
 }

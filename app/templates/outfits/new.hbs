@@ -1,18 +1,18 @@
-{{#paper-form onSubmit="save" as |form|}}
-{{#paper-card as |card|}}
+{{#paper-form onSubmit=(action "saveRecord" model) as |form|}}
+  {{#paper-card as |card|}}
     {{#card.title as |title|}}
-        {{#title.text as |text|}}
+      {{#title.text as |text|}}
         {{#text.headline}}Create new clothes{{/text.headline}}
-        {{/title.text}}
+      {{/title.text}}
     {{/card.title}}
 
     {{#card.content}}
-        {{form.input label="Name" type="string" value=model.name onChange=(action (mut model.name))}}
+      {{form.input label="Name" type="string" value=model.name onChange=(action (mut model.name))}}
     {{/card.content}}
 
     {{#card.actions class="layout-row layout-align-start-center" as |actions|}}
-        {{#paper-button onClick=(action form.onSubmit)}}Save{{/paper-button}}
+      {{#paper-button onClick=(action form.onSubmit)}}Save{{/paper-button}}
     {{/card.actions}}
 
-    {{/paper-card}}
+  {{/paper-card}}
 {{/paper-form}}

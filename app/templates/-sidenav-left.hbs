@@ -1,7 +1,10 @@
-{{#paper-sidenav class="md-whiteframe-z2" name="left" open=leftSideBarOpen onToggle=(action (mut leftSideBarOpen)) }} 
-  {{#paper-toolbar as |toolbar|}} 
-    {{#paper-toolbar-tools}}TidyCloset{{/paper-toolbar-tools}}  
-      {{#paper-content padding=true}}{{link-to 'All clothes' 'outfits.index'}}{{/paper-content}}
-      {{#paper-content padding=true}}{{link-to 'Add new clothes' 'outfits.new'}}{{/paper-content}}   
+{{#paper-sidenav class="md-whiteframe-z2" name="left" open=leftSideBarOpen onToggle=(action (mut leftSideBarOpen)) }}
+  {{#paper-toolbar as |toolbar|}}
+    {{#paper-toolbar-tools class="md-3-line"}}TidyCloset{{/paper-toolbar-tools}}
   {{/paper-toolbar}}
+   {{#paper-list}}
+      {{#paper-item}}
+          {{link-to 'All clothes' 'outfits.index' class="md-list-item-text"}}
+      {{/paper-item}}
+    {{/paper-list}}
 {{/paper-sidenav}}

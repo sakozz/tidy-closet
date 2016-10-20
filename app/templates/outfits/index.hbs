@@ -1,24 +1,32 @@
-{{#each model as |outfit|}}
- {{#paper-card as |card|}}
-    {{#card.title as |title|}}
-        {{#title.text as |text|}}
+<div class="layout">
+  <h2 class="flex-80">All your outfits</h2>
+  {{#link-to 'outfits.new'}}{{#paper-button raised=true fab=true}}{{paper-icon 'add'}}{{/paper-button}}{{/link-to}}
+</div>
+<div class="layout-row layout-xs-column">
+  {{#each model as |outfit|}}
+
+    {{#paper-card class="layout-column flex-xs flex-gt-xs-25" as |card|}}
+      {{#link-to 'outfits.show' outfit class="linked-card" }}
+        {{#card.title as |title|}}
+          {{#title.text as |text|}}
             {{#text.headline}}
-                {{outfit.name}}
+              {{outfit.name}}
             {{/text.headline}}
           {{/title.text}}
         {{/card.title}}
         {{#card.content}}
           <p>
-            The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-            two most important words in Ernest Greene's musical language: feel it. </p>
+            The titles of Washed Out's breakthrough song and the first single from Paracosm share the two most important words in Ernest Greene's musical language: feel it. </p>
         {{/card.content}}
-        
-        {{#card.actions class="layout-row layout-align-start-center" as |actions|}}
-          {{#actions.icons}}
-            {{#paper-button iconButton=true}}{{paper-icon 'favorite'}}{{/paper-button}}
-            {{#paper-button iconButton=true}}{{paper-icon 'share'}}{{/paper-button}}
-          {{/actions.icons}}
-          {{#paper-button}}Edit{{/paper-button}}
-        {{/card.actions}}
-      {{/paper-card}}
-{{/each}}
+      {{/link-to}}
+      {{#card.actions class="layout-row layout-align-start-center" as |actions|}}
+        {{#actions.icons}}
+          {{#paper-button iconButton=true}}{{paper-icon 'favorite'}}{{/paper-button}}
+          {{#paper-button iconButton=true}}{{paper-icon 'share'}}{{/paper-button}}
+          {{#paper-button iconButton=true onClick=(action "deleteRecord" outfit)}}{{paper-icon 'delete'}}{{/paper-button}}
+        {{/actions.icons}}
+      {{/card.actions}}
+    {{/paper-card}}
+
+  {{/each}}
+</div>
