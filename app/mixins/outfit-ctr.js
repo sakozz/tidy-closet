@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
+  showDialog: false,
+  dialogOrigin: '',
   actions: {
     saveRecord(record) {
       let self = this;
@@ -17,19 +19,28 @@ export default Ember.Mixin.create({
     },
     editRecord(record) {
       record.set('onEditMode', true);
+    },
+
+    viewImage(record, imageIndex) {
+      this.set('dialogOrigin', '.'+record.id + '-image-' + imageIndex);
+      this.set('showDialog', true);
+    },
+
+    closeDialog() {
+      this.set('showDialog', false);
     }
   },
 
-     removeImage: function (image) {
-        this.get('selectedSurfaces').forEach(function (surface) {
-          if (Ember.isEqual(surface.id, image.FileName.split('__')[0]) ){
-              var attachments =  surface.get('attachments').rejectBy('FileName', image.FileName);
-              surface.set('base64Images', JSON.stringify(attachments));
-              surface.set('attachments', attachments);
-           }
-        });
+  removeImage: function(image) {
+    this.get('selectedSurfaces').forEach(function(surface) {
+      if (Ember.isEqual(surface.id, image.FileName.split('__')[0])) {
+        var attachments = surface.get('attachments').rejectBy('FileName', image.FileName);
+        surface.set('base64Images', JSON.stringify(attachments));
+        surface.set('attachments', attachments);
+      }
+    });
 
-        this.get('applicationController').set('fullscreenImage', {});
-        this.get('applicationController').set('isFullscreenMode', false);
-     }
+    this.get('applicationController').set('fullscreenImage', {});
+    this.get('applicationController').set('isFullscreenMode', false);
+  }
 });
