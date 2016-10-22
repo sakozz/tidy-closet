@@ -7,6 +7,7 @@
 
     {{#paper-card class="layout-column flex-xs flex-gt-xs-25" as |card|}}
       {{#link-to 'outfits.show' outfit class="linked-card" }}
+        {{card.image src=outfit.defaultImage alt="Washed Out" title="Washed Out"}}
         {{#card.title as |title|}}
           {{#title.text as |text|}}
             {{#text.headline}}
