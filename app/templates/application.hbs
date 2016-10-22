@@ -7,14 +7,17 @@
                     {{#paper-button iconButton=true onClick=(action toggleAction)}}
                         {{paper-icon "menu"}}
                     {{/paper-button}}
-                {{/paper-sidenav-toggle}}                   
+                {{/paper-sidenav-toggle}}
                 {{paper-input placeholder="Search by tags" type="text" value='' onChange=(action (mut user.phone)) iconRight="search"  class="flex"}}
-        
+
             {{/paper-toolbar-tools}}
         {{/paper-toolbar}}
-        
+
         {{#paper-content }}
          {{outlet}}
         {{/paper-content}}
     </div>
  {{/paper-sidenav-container}}
+ {{#link-to 'outfits.new' class="new-outfit-link"}}
+   {{#paper-button raised=true fab=true primary=true}}{{paper-icon 'add'}}{{/paper-button}}
+ {{/link-to}}

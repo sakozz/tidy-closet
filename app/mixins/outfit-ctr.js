@@ -21,6 +21,11 @@ export default Ember.Mixin.create({
       record.set('onEditMode', true);
     },
 
+    addToFavorite(record){
+      record.set('isFavorite', !record.get('isFavorite'));
+      record.save();
+    },
+
     viewImage(record, imageIndex) {
       this.set('dialogOrigin', '.'+record.id + '-image-' + imageIndex);
       this.set('showDialog', true);

@@ -25,7 +25,7 @@ export default DS.Model.extend({
       if (isPresent(image)) {
         return 'data:image/jpeg;base64,' + image.Base64Content;
       } else {
-        return "http://icons.iconarchive.com/icons/dtafalonso/android-lollipop/512/Camera-Moto-icon.png";
+        return "assets/images/add-photo-image.png";
       }
     }
   })

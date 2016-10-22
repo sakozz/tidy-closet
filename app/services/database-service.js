@@ -48,6 +48,10 @@ export default Ember.Service.extend({
           reject({success: false, message: 'sqlitePlugin not available'});
         }
       });
+
+      self.get('cordova').on('backbutton', self, function(){
+        window.history.back();
+      });
     });
   }
 });
