@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import ImageManager from 'tidy-closet/mixins/image-manager';
 
-export default Ember.Mixin.create({
+export default Ember.Mixin.create(ImageManager, {
   showDialog: false,
   dialogOrigin: '',
   actions: {
@@ -24,6 +25,23 @@ export default Ember.Mixin.create({
     addToFavorite(record){
       record.set('isFavorite', !record.get('isFavorite'));
       record.save();
+    },
+
+    takePhoto() {
+      let model = this.get('model');
+      this.captureImage().then(function(imageData) {
+        var images = model.get('images') || [];
+        var imgId = model.get('name') || 'new' + '__' + Date.now();
+        images.addObject({
+          FileName: imgId + '.jpeg',
+          Description: '',
+          ContentType: 'data:image/jpeg;base64',
+          Base64Content: imageData
+        });
+        model.set('base64Images', JSON.stringify(images));
+      }, function(error) {
+        console.error(error);
+      });
     },
 
     viewImage(record, imageIndex) {

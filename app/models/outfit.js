@@ -28,6 +28,10 @@ export default DS.Model.extend({
         return "assets/images/add-photo-image.png";
       }
     }
-  })
+  }),
+
+  imageBg: Ember.computed('defaultImage', function() {
+   return Ember.String.htmlSafe('background:url(' + this.get('defaultImage')+ ') no-repeat center center');
+ })
 
 });

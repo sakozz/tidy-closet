@@ -1,23 +1,23 @@
-{{#paper-sidenav-container class="inner-sidenav"}}
-   {{partial 'sidenav-left'}}
+{{!-- {{#gesture-recogizer}}{{/gesture-recogizer}} --}}
+{{#gesture-recognizer}}
+  {{#paper-sidenav-container class="inner-sidenav" }}
+    {{partial 'sidenav-left'}}
     <div layout="column" role="main" flex>
-        {{#paper-toolbar}}
-            {{#paper-toolbar-tools}}
-                {{#paper-sidenav-toggle name="left" class="hide-gt-sm flex-none" as |toggleAction|}}
-                    {{#paper-button iconButton=true onClick=(action toggleAction)}}
-                        {{paper-icon "menu"}}
-                    {{/paper-button}}
-                {{/paper-sidenav-toggle}}
-                {{paper-input placeholder="Search by tags" type="text" value='' onChange=(action (mut user.phone)) iconRight="search"  class="flex"}}
+      {{#paper-toolbar}}
+        {{#paper-toolbar-tools}}
+          {{#paper-sidenav-toggle name="left" class="hide-gt-sm flex-none" as |toggleAction|}}
+            {{#paper-button iconButton=true onClick=(action toggleAction)}}
+              {{paper-icon "menu"}}
+            {{/paper-button}}
+          {{/paper-sidenav-toggle}}
+          {{paper-input placeholder="Search by tags" type="text" value='' onChange=(action (mut user.phone)) iconRight="search" class="flex"}}
 
-            {{/paper-toolbar-tools}}
-        {{/paper-toolbar}}
+        {{/paper-toolbar-tools}}
+      {{/paper-toolbar}}
 
-        {{#paper-content }}
-         {{outlet}}
-        {{/paper-content}}
+      {{#paper-content }}
+        {{outlet}}
+      {{/paper-content}}
     </div>
- {{/paper-sidenav-container}}
- {{#link-to 'outfits.new' class="new-outfit-link"}}
-   {{#paper-button raised=true fab=true primary=true}}{{paper-icon 'add'}}{{/paper-button}}
- {{/link-to}}
+  {{/paper-sidenav-container}}
+{{/gesture-recognizer}}
