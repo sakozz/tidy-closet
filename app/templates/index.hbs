@@ -19,7 +19,6 @@
         {{/card.title}}
         {{#card.content}}
           {{form.input label="Name" type="string" value=newTag.name onChange=(action (mut newTag.name))}}
-          {{form.input label="Note" type="string" value=newTag.description onChange=(action (mut newTag.description))}}
         {{/card.content}}
         {{#card.actions class="layout-row layout-align-start-center" as |actions|}}
           {{#paper-button onClick=(action form.onSubmit)}}Save{{/paper-button}}

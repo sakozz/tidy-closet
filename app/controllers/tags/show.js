@@ -16,18 +16,22 @@ export default Ember.Controller.extend(OutfitCtr, {
   }),
   actions:{
     addNewOutfit(){
-      this.set('currentOutfit', function(){
-        return this.store.createRecord('outfit');
+      this.setProperties({
+        showOutfitForm: true,
+        showCurrentOutfit: true,
+        currentOutfit: this.store.createRecord('outfit')
       });
-      this.set('showOutfitForm', true);
     },
     showOutfit(outfit){
       this.set('currentOutfit', outfit);
       this.set('showCurrentOutfit', true);
     },
     editOutfit(outfit){
-      this.set('currentOutfit', outfit);
-      this.set('showOutfitForm', true);
+      this.setProperties({
+        showOutfitForm: true,
+        showCurrentOutfit: true,
+        currentOutfit: outfit
+      });
     }
 
   }

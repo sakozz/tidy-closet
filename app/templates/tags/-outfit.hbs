@@ -33,18 +33,23 @@
 {{/paper-form}}
 
 {{#if showDialog}}
-  {{#paper-dialog onClose=(action "closeDialog") origin=dialogOrigin}}
+  {{#paper-dialog onClose=(action "closeDialog") origin=dialogOrigin class="outfit-images-dialog"}}
 
     {{#paper-dialog-content}}
+      {{#swiper-container}}
       {{#each currentOutfit.images as |image|}}
-          <div class="flex-25 image"><img
-                  src= {{concat 'data:image/jpeg;base64,' image.Base64Content}} {{action 'viewImage' image}}></div>
+            {{#swiper-slide}}
+              <div class="flex">
+                  <img src= {{concat 'data:image/jpeg;base64,' image.Base64Content}} {{action 'viewImage' image}}>
+              </div>
+            {{/swiper-slide}}
       {{/each}}
+      {{/swiper-container}}
     {{/paper-dialog-content}}
 
     {{#paper-dialog-actions class="layout-row" }}
         <span class="flex"></span>
-        {{#paper-button onClick=(action "closeDialog")}}OK{{/paper-button}}
+        {{#paper-button onClick=(action "closeDialog")}}X{{/paper-button}}
     {{/paper-dialog-actions}}
   {{/paper-dialog}}
 {{/if}}
