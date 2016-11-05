@@ -7,9 +7,16 @@ export default Ember.Mixin.create(ImageManager, {
   actions: {
     saveRecord(record) {
       let self = this;
-      record.save().then(function(record) {
-        record.set('onEditMode', false);
-        self.transitionToRoute('outfits');
+      var tag = this.get('selectedTag');
+      record.get('tags').pushObject(tag);
+      tag.get('outfits').pushObject(record);
+      record.save().then(function() {
+        tag.save().then(function(){
+          self.setProperties({
+            showCurrentOutfit: false,
+            showOutfitForm: false,
+          });
+        });
       });
     },
     deleteRecord(record) {
@@ -27,26 +34,28 @@ export default Ember.Mixin.create(ImageManager, {
       record.save();
     },
 
-    takePhoto() {
-      let model = this.get('model');
+    takePhoto(record) {
+      // let record = this.get('record');
       this.captureImage().then(function(imageData) {
-        var images = model.get('images') || [];
-        var imgId = model.get('name') || 'new' + '__' + Date.now();
+        var images = record.get('images') || [];
+        var imgId = record.get('name') || 'new' + '__' + Date.now();
         images.addObject({
           FileName: imgId + '.jpeg',
           Description: '',
           ContentType: 'data:image/jpeg;base64',
           Base64Content: imageData
         });
-        model.set('base64Images', JSON.stringify(images));
+        record.set('base64Images', JSON.stringify(images));
       }, function(error) {
         console.error(error);
       });
     },
 
     viewImage(record, imageIndex) {
-      this.set('dialogOrigin', '.'+record.id + '-image-' + imageIndex);
-      this.set('showDialog', true);
+      this.setProperties({
+        dialogOrigin: '.'+record.id + '-image-' + imageIndex,
+        showDialog: true
+      });
     },
 
     closeDialog() {

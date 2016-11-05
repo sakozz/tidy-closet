@@ -1,17 +1,25 @@
 // Define desired color palettes.
 $primary: "teal";
 $accent: "light-green";
-$warn: "pink";
-// If desired, import the palettes and modify to your liking.
+$warn: "pink"; // If desired, import the palettes and modify to your liking.
 @import "color-palette";
+@import "variables";
 $color-teal: map-merge($color-teal, ('contrast': $light-contrast-color));
 $color-light-green: map-merge($color-light-green, ('contrast': $light-contrast-color));
+@import "mdl-override";
 @import 'ember-paper';
+@import "helpers";
+@import "flexboxgrid";
 
+
+body{
+	background-color: $contentBg
+}
 a.linked-card {
 	color: inherit;
 	text-decoration: none;
 }
+
 
 .image {
 	padding: 5px 5px 0 0;
@@ -22,7 +30,7 @@ a.linked-card {
 }
 
 .default-image {
-	height: 175px;
+	height: 100px;
 	background-size: cover !important;
 	background-color: #c2c2c2 !important;
 }
@@ -31,13 +39,14 @@ a.linked-card {
 	position: fixed;
 }
 
-md-grid-list md-grid-tile figure {
-	-ms-flex-align: baseline;
-	align-items: baseline;
-}
-
-.new-outfit-link {
-	position: absolute;
-	right: 10px;
-	bottom: 10px;
+.tags {
+  padding:10px;
+  .tag{
+    background: white;
+    display: flex;
+    margin: 5px;
+    h3{
+      margin: 25px auto;
+    }
+  }
 }

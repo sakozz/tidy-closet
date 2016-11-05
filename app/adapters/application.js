@@ -6,7 +6,6 @@ export default Adapter.extend({
   db:null,
 
   init() {
-    let self = this;
     this._super(...arguments);
     this.set('db', this.get('dbServices.sqliteDb'));
   }

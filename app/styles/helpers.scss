@@ -1,0 +1,37 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin box-shadow($boxShadow) {
+  -webkit-box-shadow: $boxShadow;
+  -moz-box-shadow: $boxShadow;
+  -ms-box-shadow: $boxShadow;
+  box-shadow: $boxShadow;
+}
+
+@mixin size($width, $height: $width){
+  width: $width;
+  height: $height;
+}
+
+@mixin opacity($opacity)
+{
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+@mixin flex-display(){
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.box-shadow-4{
+	@include box-shadow(0px 0px 4px rgba(0, 0, 0, 0.2));
+}

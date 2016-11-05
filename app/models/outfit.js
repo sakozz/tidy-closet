@@ -8,7 +8,7 @@ export default DS.Model.extend({
   name: DS.attr('string'),
   rate: DS.attr('number'),
   rev: DS.attr('string'),
-  onEditMode: false,
+  tags: DS.hasMany('tag'),
   isFavorite: DS.attr('boolean', {
     defaultValue: false
   }),

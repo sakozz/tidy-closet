@@ -5,8 +5,8 @@ export default Ember.Mixin.create({
     options = options || {
       quality: 75,
       destinationType: navigator.camera.DestinationType.DATA_URL,
-      targetWidth: Math.sqrt(16000000 / 9 * 10), //16:9 aspect ratio
-      targetHeight: Math.sqrt(9000000 / 16 * 10),
+      targetWidth: Math.sqrt(16000000 / 4 * 1), //16:9 aspect ratio
+      targetHeight: Math.sqrt(9000000 / 3 * 1),
       sourceType: Camera.PictureSourceType.CAMERA,
       encodingType: Camera.EncodingType.JPEG,
       allowEdit: false

@@ -7,8 +7,7 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('outfits', function() {
-    this.route('new');
+  this.route('tags', function() {
     this.route('show', {path: '/:id'});
   });
 });
