@@ -5,16 +5,16 @@ import {
 
 export default function() {
   this.transition(
-    this.fromRoute('outfits.index'),
-    this.toRoute('outfits.new'),
-    this.use('slideLeft', {duration: 1000}),
-    this.reverse('toRight', { duration: 700 })
+    this.fromRoute('index'),
+    this.toRoute('tags'),
+    this.use('slideLeft', {duration: 500}),
+    this.reverse('toRight', { duration: 300 })
   );
 
   this.transition(
-    this.fromRoute('outfits.index'),
-    this.toRoute('outfits.show'),
-    this.use('slideLeft', {duration: 1000}),
+    this.hasClass('outfit-item'),
+    this.toValue(true),
+    this.use('slideLeft', {duration: 500}),
     this.reverse('toRight',  { duration: 700 } )
   );
 }

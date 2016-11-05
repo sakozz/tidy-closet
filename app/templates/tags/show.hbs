@@ -1,5 +1,7 @@
 <div class="tag-view">
-  {{#unless showCurrentOutfit}}
+  {{#liquid-if showCurrentOutfit class="outfit-item"}}
+    {{partial 'tags/outfit'}}
+  {{else}}
       <div class="container-fluid"><h3> {{model.name}} </h3></div>
       <div class="grid">
         {{#each outfits as |outfit|}}
@@ -23,7 +25,5 @@
         {{/each}}
       </div>
     {{#paper-button raised=true fab=true primary=true onClick=(action 'addNewOutfit')}}{{paper-icon 'add'}}{{/paper-button}}
-  {{else}}
-    {{partial 'tags/outfit'}}
-  {{/unless}}
+  {{/liquid-if}}
 </div>
