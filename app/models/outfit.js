@@ -1,7 +1,8 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 const {
-  isPresent
+  isPresent,
+  computed
 } = Ember;
 
 export default DS.Model.extend({
@@ -12,14 +13,17 @@ export default DS.Model.extend({
   isFavorite: DS.attr('boolean', {
     defaultValue: false
   }),
+  hasImages: computed('images', function(){
+    return this.get('images.length') > 0;
+  }),
   base64Images: DS.attr('string'),
-  images: Ember.computed('base64Images', {
+  images: computed('base64Images', {
     get() {
       var imageString = this.get('base64Images');
       return Ember.isPresent(imageString) ? JSON.parse(imageString) : [];
     }
   }),
-  defaultImage: Ember.computed('images', {
+  defaultImage: computed('images', {
     get() {
       var image = this.get('images.firstObject');
       if (isPresent(image)) {
@@ -30,7 +34,7 @@ export default DS.Model.extend({
     }
   }),
 
-  imageBg: Ember.computed('defaultImage', function() {
+  imageBg: computed('defaultImage', function() {
    return Ember.String.htmlSafe('background:url(' + this.get('defaultImage')+ ') no-repeat center center');
  })
 
