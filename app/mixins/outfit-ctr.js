@@ -1,8 +1,14 @@
 import Ember from 'ember';
 import ImageManager from 'tidy-closet/mixins/image-manager';
+const {computed, set} = Ember;
 
 export default Ember.Mixin.create(ImageManager, {
   showDialog: false,
+  imageSelectionMode: computed('imageSelectionToggled', 'currentOutfit.id', function(){
+    let selectedImages =  this.get('currentOutfit.images').filterBy('isSelected');
+    return selectedImages.length > 0;
+  }),
+  imageSelectionToggled: false,
   currentImageIndex: 0,
   dialogOrigin: '',
   actions: {
@@ -52,6 +58,17 @@ export default Ember.Mixin.create(ImageManager, {
       });
     },
 
+    imagePressed(image){
+      this.toggleProperty('imageSelectionToggled');
+      set(image, 'isSelected',  true);
+    },
+
+    toggleImageSelection(image){
+      let selected= image.isSelected || false;
+      this.toggleProperty('imageSelectionToggled');
+      set(image, 'isSelected', !selected);
+    },
+
     viewImage(record, imageIndex) {
       this.setProperties({
         dialogOrigin: '.'+record.id + '-image-' + imageIndex,
@@ -62,19 +79,13 @@ export default Ember.Mixin.create(ImageManager, {
 
     closeDialog() {
       this.set('showDialog', false);
+    },
+
+    removeImages: function(outfit) {
+      const images= outfit.get('images').rejectBy('isSelected');
+      outfit.set('base64Images', JSON.stringify(images) );
+      this.toggleProperty('imageSelectionToggled');
+      outfit.save();
     }
-  },
-
-  removeImage: function(image) {
-    this.get('selectedSurfaces').forEach(function(surface) {
-      if (Ember.isEqual(surface.id, image.FileName.split('__')[0])) {
-        var attachments = surface.get('attachments').rejectBy('FileName', image.FileName);
-        surface.set('base64Images', JSON.stringify(attachments));
-        surface.set('attachments', attachments);
-      }
-    });
-
-    this.get('applicationController').set('fullscreenImage', {});
-    this.get('applicationController').set('isFullscreenMode', false);
   }
 });

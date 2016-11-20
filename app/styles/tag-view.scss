@@ -11,7 +11,31 @@
 }
 
 .image {
-  padding: 5px 5px 0 0;
+  margin: 5px 0 0 3px;
+  padding: 3px;
+  position: relative;
+  &.selected{
+    background: $selectedBg;
+    &:before{
+      content: '\25E5';
+      color: $selectedBg;
+      position: absolute;
+      right: 0;
+      top: -15px;
+      font-size: 35px;
+      z-index: 95;
+    }
+    &:after{
+      content: '\2713';
+      color: white;
+      position: absolute;
+      top: -3px;
+      right: 1px;
+      font-weight: lighter;
+      font-size: smaller;
+      z-index: 99;
+    }
+  }
   img {
     width: 100%;
   }

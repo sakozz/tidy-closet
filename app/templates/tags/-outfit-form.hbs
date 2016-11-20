@@ -1,3 +1,4 @@
+{{#paper-form onSubmit=(action "saveRecord" currentOutfit) as |form|}}
 {{#card.content}}
   {{form.input label="Name" type="string" value=currentOutfit.name onChange=(action (mut currentOutfit.name))}}
 {{/card.content}}
@@ -9,3 +10,4 @@
   {{/actions.icons}}
   {{#paper-button onClick=(action form.onSubmit)}}Save{{/paper-button}}
 {{/card.actions}}
+  {{/paper-form}}
