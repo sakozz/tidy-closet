@@ -27,7 +27,9 @@ export default Route.extend({
 
   goBack(){
     let ctrl = this.get('controller');
-    if(ctrl.showCurrentOutfit || ctrl.showOutfitForm){
+    if(ctrl.showDialog){
+      ctrl.set('showDialog', false);
+    } else if(ctrl.showCurrentOutfit || ctrl.showOutfitForm){
       ctrl.setProperties({
         showCurrentOutfit: false,
         showOutfitForm: false
