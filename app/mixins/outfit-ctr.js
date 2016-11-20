@@ -3,6 +3,7 @@ import ImageManager from 'tidy-closet/mixins/image-manager';
 
 export default Ember.Mixin.create(ImageManager, {
   showDialog: false,
+  currentImageIndex: 0,
   dialogOrigin: '',
   actions: {
     saveRecord(record) {
@@ -54,6 +55,7 @@ export default Ember.Mixin.create(ImageManager, {
     viewImage(record, imageIndex) {
       this.setProperties({
         dialogOrigin: '.'+record.id + '-image-' + imageIndex,
+        currentImageIndex: imageIndex,
         showDialog: true
       });
     },

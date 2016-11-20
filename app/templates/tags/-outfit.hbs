@@ -38,14 +38,14 @@
   {{#paper-dialog onClose=(action "closeDialog") origin=dialogOrigin class="outfit-images-dialog"}}
 
     {{#paper-dialog-content}}
-      {{#swiper-container}}
-      {{#each currentOutfit.images as |image|}}
-            {{#swiper-slide}}
-              <div class="flex">
-                  <img src= {{concat 'data:image/jpeg;base64,' image.Base64Content}} {{action 'viewImage' image}}>
-              </div>
-            {{/swiper-slide}}
-      {{/each}}
+      {{#swiper-container initialSlide=currentImageIndex}}
+        {{#each currentOutfit.images as |image|}}
+              {{#swiper-slide}}
+                <div class="flex">
+                    <img src= {{concat 'data:image/jpeg;base64,' image.Base64Content}} {{action 'viewImage' image}}>
+                </div>
+              {{/swiper-slide}}
+        {{/each}}
       {{/swiper-container}}
     {{/paper-dialog-content}}
 
@@ -55,5 +55,3 @@
     {{/paper-dialog-actions}}
   {{/paper-dialog}}
 {{/if}}
-
-
