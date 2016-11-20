@@ -1,7 +1,11 @@
 import Ember from 'ember';
+const {
+  Route,
+  inject
+} = Ember;
 
-export default Ember.Route.extend({
-  dbServices: Ember.inject.service('database-service'),
+export default Route.extend({
+  dbServices: inject.service('database-service'),
   beforeModel(){
     return this.get('dbServices').setupDb();
   }

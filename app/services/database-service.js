@@ -5,7 +5,9 @@ import Ember from 'ember';
 
 const {
   assert,
-  isEmpty
+  isEmpty,
+  inject,
+  Service
 } = Ember;
 
 function createDb() {
@@ -39,8 +41,8 @@ function isBrowser() {
   }
 }
 
-export default Ember.Service.extend({
-  cordova: Ember.inject.service(),
+export default Service.extend({
+  cordova: inject.service(),
   sqliteDb: null,
   sqliteIsSetup: false,
   setupDb: function() {
@@ -67,10 +69,6 @@ export default Ember.Service.extend({
               message: 'sqlitePlugin not available'
             });
           }
-        });
-
-        self.get('cordova').on('backbutton', self, function() {
-          window.history.back();
         });
       }
     });

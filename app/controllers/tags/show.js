@@ -1,20 +1,26 @@
 import Ember from 'ember';
 import OutfitCtr from 'tidy-closet/mixins/outfit-ctr';
+const {
+  inject,
+  Controller
+} = Ember;
 
-export default Ember.Controller.extend(OutfitCtr, {
+export default Controller.extend(OutfitCtr, {
+  cordova: inject.service(),
   showCurrentOutfit: false,
   showOutfitForm: false,
   selectedTag: Ember.computed.alias('model'),
-  tags: Ember.computed(function(){
+  tags: Ember.computed(function () {
     return this.store.peekAll('tag');
   }),
-  outfits: Ember.computed('model.id', function(){
+  outfits: Ember.computed('model.id', function () {
     return this.get('model.outfits');
   }),
-  currentOutfit: Ember.computed(function(){
+  currentOutfit: Ember.computed(function () {
     return this.store.createRecord('outfit');
   }),
-  actions:{
+
+  actions: {
     addNewOutfit(){
       this.setProperties({
         showOutfitForm: true,
