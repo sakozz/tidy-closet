@@ -18,7 +18,7 @@
         {{/menu.trigger}}
 
         {{#menu.content as |content|}}
-          {{#content.menu-item onClick=(action 'changeCategory')}}
+          {{#content.menu-item onClick=(action 'openTagChooser')}}
             {{paper-icon 'swap_horiz' class="md-menu-align-target"}}
             <span>Change category</span>
           {{/content.menu-item}}
@@ -36,4 +36,3 @@
     {{/if}}
   {{/paper-toolbar-tools}}
 {{/paper-toolbar}}
-{{partial 'tags/delete-confirmation'}}

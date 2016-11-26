@@ -5,7 +5,12 @@ const {computed, isEqual, set} = Ember;
 export default Ember.Mixin.create(ImageManager, {
   showDialog: false,
   showConfirmationDialog: false,
+  showTagChooser: false,
   confirmDialogOrigin: '',
+  imageSelectionToggled: false,
+  cardSelectionToggled: false,
+  currentImageIndex: 0,
+  dialogOrigin: '',
   imageSelectionMode: computed('imageSelectionToggled', 'currentOutfit.id', function () {
     let selectedImages = this.get('currentOutfit.images').filterBy('isSelected');
     return selectedImages.length > 0;
@@ -14,10 +19,10 @@ export default Ember.Mixin.create(ImageManager, {
     let selectedCards = this.get('model.outfits').filterBy('isSelected');
     return selectedCards.length > 0;
   }),
-  imageSelectionToggled: false,
-  cardSelectionToggled: false,
-  currentImageIndex: 0,
-  dialogOrigin: '',
+  tags: computed(function () {
+    return this.store.peekAll('tag');
+  }),
+
   actions: {
     saveRecord(record) {
       let self = this;
@@ -99,7 +104,7 @@ export default Ember.Mixin.create(ImageManager, {
     },
 
     removeImages: function () {
-      let outfit= this.get('currentOutfit');
+      let outfit = this.get('currentOutfit');
       const images = outfit.get('images').rejectBy('isSelected');
       outfit.set('base64Images', JSON.stringify(images));
       this.toggleProperty('imageSelectionToggled');
@@ -137,8 +142,28 @@ export default Ember.Mixin.create(ImageManager, {
       });
 
     },
-    changeCategory(){
+    openTagChooser(){
+      this.set('showTagChooser', true);
+    },
+    chooseTag(targetTag){
+      let currentTag= this.get('model');
+      let selectedOutfits = this.get('selectedOutfits');
+      currentTag.get('outfits').removeObjects(selectedOutfits);
+      currentTag.save().then(function () {
+        targetTag.get('outfits').addObjects(selectedOutfits);
+        targetTag.save()
+      });
 
+      selectedOutfits.forEach(function (outfit) {
+        outfit.get('tags').addObject(targetTag);
+        set(outfit, 'isSelected', false);
+        outfit.save();
+      });
+      this.send('closeTagChooser');
+    },
+
+    closeTagChooser(){
+      this.set('showTagChooser', false);
     },
 
     favoriteSelected(){
@@ -154,5 +179,10 @@ export default Ember.Mixin.create(ImageManager, {
       });
     }
 
-  }
+  },
+
+  //functions
+  selectedOutfits: computed('cardSelectionToggled', 'model.id', function () {
+    return this.get('model.outfits').filterBy('isSelected');
+  })
 });

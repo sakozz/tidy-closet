@@ -1,0 +1,24 @@
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+      <h2>TidyCloset</h2>
+      <span class="flex"></span>
+      {{#if newTagForm}}
+        {{#paper-button raised=true class="toolbar-action-btn" mini=true fab=true primary=true onClick=(action 'cancelNewTag')}}{{paper-icon 'close'}}{{/paper-button}}
+      {{else}}
+        {{#paper-button raised=true class="toolbar-action-btn" mini=true fab=true primary=true onClick=(action 'addNewTag')}}{{paper-icon 'add'}}{{/paper-button}}
+      {{/if}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+
+{{#if newTagForm}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      {{#paper-form onSubmit=(action "saveTag" newTag) as |form|}}
+        {{form.input label="Name" type="string" value=newTag.name onChange=(action (mut newTag.name))}}
+        <span class="flex"></span>
+        {{#paper-button onClick=(action form.onSubmit) raised=true primary=true}}Save{{/paper-button}}
+      {{/paper-form}}
+
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+{{/if}}

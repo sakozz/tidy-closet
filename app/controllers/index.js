@@ -19,7 +19,14 @@ export default Ember.Controller.extend({
           self.set('newTag', self.store.createRecord('tag'));
           self.transitionToRoute('index');
         });
-      }
+      },
+    cancelNewTag(){
+      this.set('newTagForm', false);
+    },
+
+    deleteTags(){
+
+    }
   }
 
 });

@@ -2,3 +2,9 @@ md-content {
     color: rgba(0, 0, 0, 0.6);
     background-color: $contentBg !important;
   }
+md-toolbar{
+  .md-input{
+    color: white;
+    border-color: whitesmoke !important;
+  }
+}

@@ -1,0 +1,17 @@
+{{#if showTagChooser}}
+  {{#paper-dialog class="flex-50" onClose=(action "closeTagChooser")  clickOutsideToClose=true}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+          <h2> Choose a category </h2>
+          <span class="flex"></span>
+          {{#paper-button iconButton=true onClick=(action "closeTagChooser" )}}{{paper-icon icon="close"}}{{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-dialog-content}}
+      {{#each tags as |tag|}}
+        {{#paper-button raised="true" onClick=(action "chooseTag" tag)}}{{tag.name}}{{/paper-button}}
+      {{/each}}
+    {{/paper-dialog-content}}
+  {{/paper-dialog}}
+{{/if}}
