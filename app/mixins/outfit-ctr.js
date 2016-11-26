@@ -98,7 +98,8 @@ export default Ember.Mixin.create(ImageManager, {
       this.set('showDialog', false);
     },
 
-    removeImages: function (outfit) {
+    removeImages: function () {
+      let outfit= this.get('currentOutfit');
       const images = outfit.get('images').rejectBy('isSelected');
       outfit.set('base64Images', JSON.stringify(images));
       this.toggleProperty('imageSelectionToggled');

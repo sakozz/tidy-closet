@@ -20,5 +20,5 @@
 </div>
 
 {{#if imageSelectionMode}}
-  {{#paper-button primary=true raised=true onClick=(action "removeImages" currentOutfit)}}Remove images{{/paper-button}}
+  {{#paper-button primary=true class="imagesDeletionDialog" raised=true onClick=(action "openConfirmation" "removeImages" ".imagesDeletionDialog")}}Remove images{{/paper-button}}
 {{/if}}
