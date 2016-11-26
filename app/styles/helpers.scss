@@ -12,6 +12,14 @@
   box-shadow: $boxShadow;
 }
 
+
+@mixin box-sizing($boxSizing) {
+  -webkit-box-sizing: $boxSizing;
+  -moz-box-sizing: $boxSizing;
+  -ms-box-sizing: $boxSizing;
+  box-sizing: $boxSizing;
+}
+
 @mixin size($width, $height: $width){
   width: $width;
   height: $height;

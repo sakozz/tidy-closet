@@ -11,32 +11,43 @@
 }
 
 .image {
-  margin: 5px 0 0 3px;
-  padding: 3px;
+  margin: 5px 0 0 5px;
   position: relative;
-  &.selected{
-    background: $selectedBg;
-    &:before{
+
+  img {
+    width: 100%;
+  }
+}
+.selectable {
+  position: relative;
+  .selectable-mask{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    width: 100%;
+
+  }
+  .selected {
+    border: 3px solid $selectedBg;
+    @include box-sizing(border-box);
+    &:before {
       content: '\25E5';
       color: $selectedBg;
       position: absolute;
-      right: 0;
-      top: -15px;
+      right: -3px;
+      top: -17px;
       font-size: 35px;
       z-index: 95;
     }
-    &:after{
+    &:after {
       content: '\2713';
       color: white;
       position: absolute;
-      top: -3px;
-      right: 1px;
+      top: -5px;
+      right: -2px;
       font-weight: lighter;
       font-size: smaller;
       z-index: 99;
     }
-  }
-  img {
-    width: 100%;
   }
 }

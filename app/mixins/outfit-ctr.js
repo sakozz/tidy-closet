@@ -8,7 +8,12 @@ export default Ember.Mixin.create(ImageManager, {
     let selectedImages =  this.get('currentOutfit.images').filterBy('isSelected');
     return selectedImages.length > 0;
   }),
+  cardSelectionMode: computed('cardSelectionToggled', 'model.id', function(){
+    let selectedCards =  this.get('model.outfits').filterBy('isSelected');
+    return selectedCards.length > 0;
+  }),
   imageSelectionToggled: false,
+  cardSelectionToggled: false,
   currentImageIndex: 0,
   dialogOrigin: '',
   actions: {
@@ -67,6 +72,16 @@ export default Ember.Mixin.create(ImageManager, {
       let selected= image.isSelected || false;
       this.toggleProperty('imageSelectionToggled');
       set(image, 'isSelected', !selected);
+    },
+
+    toggleCardSelection(outfit){
+      let selected= outfit.isSelected || false;
+      this.toggleProperty('cardSelectionToggled');
+      set(outfit, 'isSelected', !selected);
+    },
+    outfitPressed(outfit){
+      this.toggleProperty('cardSelectionToggled');
+      set(outfit, 'isSelected',  true);
     },
 
     viewImage(record, imageIndex) {

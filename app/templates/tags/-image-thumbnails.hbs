@@ -1,26 +1,21 @@
 <div class="grid images">
   {{#each currentOutfit.images as |image index|}}
-      <div class="col-xs-3">
+    <div class="col-xs-3 selectable">
+      <div class="image">
         {{#if imageSelectionMode}}
           {{#if image.isSelected}}
-              <div class="image selected">
-                  <img src= {{concat "data:image/jpeg;base64," image.Base64Content}} {{action 'toggleImageSelection' image }}>
-              </div>
+              <div class="selectable-mask selected" {{action 'toggleImageSelection' image}}></div>
           {{else}}
-              <div class="image">
-                  <img src= {{concat "data:image/jpeg;base64," image.Base64Content}} {{action 'toggleImageSelection' image }}>
-              </div>
+              <div class="selectable-mask" {{action 'toggleImageSelection' image}}></div>
           {{/if}}
-
-        {{else}}
-            <div class="image">
-              {{#press-recognizer  onZonePressed=(action "imagePressed" image)}}
-                  <img src= {{concat "data:image/jpeg;base64," image.Base64Content}}
-                               class= {{concat currentOutfit.id '-image-' index}} {{action 'viewImage' currentOutfit index}}>
-              {{/press-recognizer}}
-            </div>
         {{/if}}
+
+        {{#press-recognizer  onZonePressed=(action "imagePressed" image)}}
+            <img src= {{concat "data:image/jpeg;base64," image.Base64Content}}
+                         class= {{concat currentOutfit.id '-image-' index}} {{action 'viewImage' currentOutfit index}}>
+        {{/press-recognizer}}
       </div>
+    </div>
   {{/each}}
 </div>
 

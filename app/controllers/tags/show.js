@@ -9,6 +9,7 @@ export default Controller.extend(OutfitCtr, {
   cordova: inject.service(),
   showCurrentOutfit: false,
   showOutfitForm: false,
+
   selectedTag: Ember.computed.alias('model'),
   tags: Ember.computed(function () {
     return this.store.peekAll('tag');
