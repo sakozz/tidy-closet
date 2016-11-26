@@ -29,8 +29,11 @@ body{
     max-width: 98%;
     max-height: 98%;
   }
-  .md-dialog-content{
-    padding:0;
-    img{max-width: 100%;}
+
+  .outfit-images-dialog {
+    &.md-dialog-content{
+      padding:0;
+      img{max-width: 100%;}
+    }
   }
 }

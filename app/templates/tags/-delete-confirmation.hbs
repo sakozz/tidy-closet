@@ -1,0 +1,23 @@
+{{#if showConfirmationDialog}}
+  {{#paper-dialog class="flex-50" onClose=(action "closeConfirmation" "cancel") origin=confirmDialogOrigin clickOutsideToClose=true}}
+      <form>
+        {{#paper-toolbar}}
+          {{#paper-toolbar-tools}}
+              <h2> Deleting records </h2>
+              <span class="flex"></span>
+            {{#paper-button iconButton=true onClick=(action "closeConfirmation" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+          {{/paper-toolbar-tools}}
+        {{/paper-toolbar}}
+
+        {{#paper-dialog-content}}
+            <p>Are you sure that you want to delete these items? </p>
+        {{/paper-dialog-content}}
+
+        {{#paper-dialog-actions class="layout-row"}}
+            <span class="flex"></span>
+          {{#paper-button onClick=(action "closeConfirmation" "cancel")}}Cancel{{/paper-button}}
+          {{#paper-button onClick=(action "confirm")}}Confirm{{/paper-button}}
+        {{/paper-dialog-actions}}
+      </form>
+  {{/paper-dialog}}
+{{/if}}

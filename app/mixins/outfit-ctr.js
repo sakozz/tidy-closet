@@ -1,15 +1,17 @@
 import Ember from 'ember';
 import ImageManager from 'tidy-closet/mixins/image-manager';
-const {computed, set} = Ember;
+const {computed, isEqual, set} = Ember;
 
 export default Ember.Mixin.create(ImageManager, {
   showDialog: false,
-  imageSelectionMode: computed('imageSelectionToggled', 'currentOutfit.id', function(){
-    let selectedImages =  this.get('currentOutfit.images').filterBy('isSelected');
+  showConfirmationDialog: false,
+  confirmDialogOrigin: '',
+  imageSelectionMode: computed('imageSelectionToggled', 'currentOutfit.id', function () {
+    let selectedImages = this.get('currentOutfit.images').filterBy('isSelected');
     return selectedImages.length > 0;
   }),
-  cardSelectionMode: computed('cardSelectionToggled', 'model.id', function(){
-    let selectedCards =  this.get('model.outfits').filterBy('isSelected');
+  cardSelectionMode: computed('cardSelectionToggled', 'model.id', function () {
+    let selectedCards = this.get('model.outfits').filterBy('isSelected');
     return selectedCards.length > 0;
   }),
   imageSelectionToggled: false,
@@ -22,8 +24,8 @@ export default Ember.Mixin.create(ImageManager, {
       var tag = this.get('selectedTag');
       record.get('tags').pushObject(tag);
       tag.get('outfits').pushObject(record);
-      record.save().then(function() {
-        tag.save().then(function(){
+      record.save().then(function () {
+        tag.save().then(function () {
           self.setProperties({
             showCurrentOutfit: false,
             showOutfitForm: false,
@@ -33,7 +35,7 @@ export default Ember.Mixin.create(ImageManager, {
     },
     deleteRecord(record) {
       let self = this;
-      record.destroyRecord().then(function() {
+      record.destroyRecord().then(function () {
         self.transitionToRoute('outfits');
       });
     },
@@ -48,7 +50,7 @@ export default Ember.Mixin.create(ImageManager, {
 
     takePhoto(record) {
       // let record = this.get('record');
-      this.captureImage().then(function(imageData) {
+      this.captureImage().then(function (imageData) {
         var images = record.get('images') || [];
         var imgId = record.get('name') || 'new' + '__' + Date.now();
         images.addObject({
@@ -58,35 +60,35 @@ export default Ember.Mixin.create(ImageManager, {
           Base64Content: imageData
         });
         record.set('base64Images', JSON.stringify(images));
-      }, function(error) {
+      }, function (error) {
         console.error(error);
       });
     },
 
     imagePressed(image){
       this.toggleProperty('imageSelectionToggled');
-      set(image, 'isSelected',  true);
+      set(image, 'isSelected', true);
     },
 
     toggleImageSelection(image){
-      let selected= image.isSelected || false;
+      let selected = image.isSelected || false;
       this.toggleProperty('imageSelectionToggled');
       set(image, 'isSelected', !selected);
     },
 
     toggleCardSelection(outfit){
-      let selected= outfit.isSelected || false;
+      let selected = outfit.isSelected || false;
       this.toggleProperty('cardSelectionToggled');
       set(outfit, 'isSelected', !selected);
     },
     outfitPressed(outfit){
       this.toggleProperty('cardSelectionToggled');
-      set(outfit, 'isSelected',  true);
+      set(outfit, 'isSelected', true);
     },
 
     viewImage(record, imageIndex) {
       this.setProperties({
-        dialogOrigin: '.'+record.id + '-image-' + imageIndex,
+        dialogOrigin: '.' + record.id + '-image-' + imageIndex,
         currentImageIndex: imageIndex,
         showDialog: true
       });
@@ -96,11 +98,60 @@ export default Ember.Mixin.create(ImageManager, {
       this.set('showDialog', false);
     },
 
-    removeImages: function(outfit) {
-      const images= outfit.get('images').rejectBy('isSelected');
-      outfit.set('base64Images', JSON.stringify(images) );
+    removeImages: function (outfit) {
+      const images = outfit.get('images').rejectBy('isSelected');
+      outfit.set('base64Images', JSON.stringify(images));
       this.toggleProperty('imageSelectionToggled');
       outfit.save();
+    },
+
+    openConfirmation(confirmationType, selector){
+      this.setProperties({
+        confirmDialogOrigin: selector,
+        confirmationType: confirmationType,
+        showConfirmationDialog: true
+      });
+    },
+
+    confirm(){
+      this.send(this.get('confirmationType')); // confirmationType is named as action-name
+      this.set('showConfirmationDialog', false);
+
+    },
+    closeConfirmation(){
+      this.set('showConfirmationDialog', false);
+    },
+
+    deleteSelectedOutfits(){
+      let self = this;
+      var selectedOutfits = this.get('model.outfits').filterBy('isSelected');
+      var tag = this.get('model');
+
+      tag.get('outfits').removeObjects(selectedOutfits);
+      tag.save().then(function () {
+        selectedOutfits.forEach(function (outfit) {
+          outfit.destroyRecord();
+        });
+        self.toggleProperty('cardSelectionToggled');
+      });
+
+    },
+    changeCategory(){
+
+    },
+
+    favoriteSelected(){
+      this.get('model.outfits').filterBy('isSelected').forEach(function (outfit) {
+        outfit.set('isFavorite', true);
+        outfit.save();
+      });
+    },
+    unfavoriteSelected(){
+      this.get('model.outfits').filterBy('isSelected').forEach(function (outfit) {
+        outfit.set('isFavorite', false);
+        outfit.save();
+      });
     }
+
   }
 });

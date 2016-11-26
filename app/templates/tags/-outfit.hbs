@@ -31,9 +31,9 @@
 {{/paper-card}}
 
 {{#if showDialog}}
-  {{#paper-dialog onClose=(action "closeDialog") origin=dialogOrigin class="outfit-images-dialog"}}
+  {{#paper-dialog onClose=(action "closeDialog") origin=dialogOrigin}}
 
-    {{#paper-dialog-content}}
+    {{#paper-dialog-content class="outfit-images-dialog"}}
       {{#swiper-container initialSlide=currentImageIndex}}
         {{#each currentOutfit.images as |image|}}
           {{#swiper-slide}}

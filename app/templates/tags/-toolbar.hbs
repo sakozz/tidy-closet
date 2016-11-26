@@ -1,0 +1,39 @@
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "arrow_back"}}
+    {{/paper-button}}
+    <h2>TidyCloset</h2>
+    <span class="flex"></span>
+    {{#if cardSelectionMode}}
+      {{#paper-button iconButton=true class="outfitDeletionDialog" onClick=(action 'openConfirmation' 'deleteSelectedOutfits' '.outfitDeletionDialog')}}
+        {{paper-icon "delete"}}
+      {{/paper-button}}
+
+      {{#paper-menu isOpen=true position="target-right target" as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button onClick=null iconButton=true}}
+            {{paper-icon "more_vert" class="md-menu-origin"}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+
+        {{#menu.content as |content|}}
+          {{#content.menu-item onClick=(action 'changeCategory')}}
+            {{paper-icon 'swap_horiz' class="md-menu-align-target"}}
+            <span>Change category</span>
+          {{/content.menu-item}}
+          {{#content.menu-item onClick=(action 'favoriteSelected')}}
+            {{paper-icon 'favorite' primary=true class="md-menu-align-target"}}
+            <span>Add to favorites</span>
+          {{/content.menu-item}}
+          {{#content.menu-item onClick=(action 'unfavoriteSelected')}}
+            {{paper-icon 'favorite' class="md-menu-align-target"}}
+            <span>Remove from favorites</span>
+          {{/content.menu-item}}
+
+        {{/menu.content}}
+      {{/paper-menu}}
+    {{/if}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+{{partial 'tags/delete-confirmation'}}
