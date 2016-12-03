@@ -5,7 +5,6 @@
 
 {{#card.actions class="layout-row layout-align-start-center" as |actions|}}
   {{#actions.icons}}
-    {{#paper-button iconButton=true onClick=(action "deleteRecord" currentOutfit)}}{{paper-icon 'delete'}}{{/paper-button}}
     {{#paper-button iconButton=true onClick=(action "takePhoto" currentOutfit)}}{{paper-icon 'camera'}}{{/paper-button}}
   {{/actions.icons}}
   {{#paper-button onClick=(action form.onSubmit)}}Save{{/paper-button}}

@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('tags', function() {
     this.route('show', {path: '/:id'});
   });
+  this.route('favorites');
 });
 
 export default Router;

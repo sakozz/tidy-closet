@@ -1,0 +1,33 @@
+<div class="favorites-view">
+
+  {{partial 'favorites/favorites-view-toolbar'}}
+
+  {{#liquid-if showCurrentOutfit class="outfit-item"}}
+    {{partial 'favorites/favorite-outfit'}}
+  {{else}}
+      <div class="container-fluid"><h3> {{model.name}} </h3></div>
+      <div class="grid">
+        {{#each outfits as |outfit|}}
+            <div class="col-xs-6 col-sm-4">
+              {{#paper-card class="selectable"  as |card|}}
+                {{#if cardSelectionMode}}
+                  {{#if outfit.isSelected}}
+                      <div class="selectable-mask selected" {{action 'toggleCardSelection' outfit}}></div>
+                  {{else}}
+                      <div class="selectable-mask" {{action 'toggleCardSelection' outfit}}></div>
+                  {{/if}}
+                {{/if}}
+                {{#press-recognizer  onZonePressed=(action "outfitPressed" outfit)}}
+                    <div class="linked-card" {{action 'showOutfit' outfit}}>
+                        <div class="default-image" style= {{outfit.imageBg}}></div>
+                      {{#card.content}}
+                          <p>{{outfit.name}} </p>
+                      {{/card.content}}
+                    </div>
+                {{/press-recognizer}}
+              {{/paper-card}}
+            </div>
+        {{/each}}
+      </div>
+  {{/liquid-if}}
+</div>

@@ -1,0 +1,27 @@
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+    {{#paper-button iconButton=true onClick=(action 'goBack')}}
+      {{paper-icon "arrow_back"}}
+    {{/paper-button}}
+    <h2>TidyCloset</h2>
+    <span class="flex"></span>
+    {{#if cardSelectionMode}}
+
+
+      {{#paper-menu isOpen=true position="target-right target" as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button onClick=null iconButton=true}}
+            {{paper-icon "more_vert" class="md-menu-origin"}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+
+        {{#menu.content as |content|}}
+          {{#content.menu-item onClick=(action 'unfavoriteSelected')}}
+            {{paper-icon 'favorite' class="md-menu-align-target"}}
+            <span>Remove from favorites</span>
+          {{/content.menu-item}}
+        {{/menu.content}}
+      {{/paper-menu}}
+    {{/if}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}

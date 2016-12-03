@@ -11,16 +11,20 @@ export default Ember.Mixin.create(ImageManager, {
   cardSelectionToggled: false,
   currentImageIndex: 0,
   dialogOrigin: '',
+  currentOutfit: Ember.computed(function () {
+    return this.store.createRecord('outfit');
+  }),
   imageSelectionMode: computed('imageSelectionToggled', 'currentOutfit.id', function () {
     let selectedImages = this.get('currentOutfit.images').filterBy('isSelected');
     return selectedImages.length > 0;
   }),
   cardSelectionMode: computed('cardSelectionToggled', 'model.id', function () {
-    let selectedCards = this.get('model.outfits').filterBy('isSelected');
+    let selectedCards = this.get('outfits').filterBy('isSelected');
     return selectedCards.length > 0;
   }),
-  tags: computed(function () {
-    return this.store.peekAll('tag');
+
+  selectedOutfits: computed('cardSelectionToggled', 'model.id', function () {
+    return this.get('outfits').filterBy('isSelected');
   }),
 
   actions: {
@@ -38,12 +42,7 @@ export default Ember.Mixin.create(ImageManager, {
         });
       });
     },
-    deleteRecord(record) {
-      let self = this;
-      record.destroyRecord().then(function () {
-        self.transitionToRoute('outfits');
-      });
-    },
+
     editRecord(record) {
       record.set('onEditMode', true);
     },
@@ -86,6 +85,7 @@ export default Ember.Mixin.create(ImageManager, {
       this.toggleProperty('cardSelectionToggled');
       set(outfit, 'isSelected', !selected);
     },
+
     outfitPressed(outfit){
       this.toggleProperty('cardSelectionToggled');
       set(outfit, 'isSelected', true);
@@ -130,7 +130,7 @@ export default Ember.Mixin.create(ImageManager, {
 
     deleteSelectedOutfits(){
       let self = this;
-      var selectedOutfits = this.get('model.outfits').filterBy('isSelected');
+      var selectedOutfits = this.get('outfits').filterBy('isSelected');
       var tag = this.get('model');
 
       tag.get('outfits').removeObjects(selectedOutfits);
@@ -140,8 +140,8 @@ export default Ember.Mixin.create(ImageManager, {
         });
         self.toggleProperty('cardSelectionToggled');
       });
-
     },
+
     openTagChooser(){
       this.set('showTagChooser', true);
     },
@@ -167,22 +167,58 @@ export default Ember.Mixin.create(ImageManager, {
     },
 
     favoriteSelected(){
-      this.get('model.outfits').filterBy('isSelected').forEach(function (outfit) {
-        outfit.set('isFavorite', true);
+      this.get('outfits').filterBy('isSelected').forEach(function (outfit) {
+        outfit.setProperties({
+          isSelected: false,
+          isFavorite: true
+        });
         outfit.save();
       });
     },
+
     unfavoriteSelected(){
-      this.get('model.outfits').filterBy('isSelected').forEach(function (outfit) {
-        outfit.set('isFavorite', false);
+      this.get('outfits').filterBy('isSelected').forEach(function (outfit) {
+        outfit.setProperties({
+          isSelected: false,
+          isFavorite: false
+        });
         outfit.save();
+      });
+    },
+
+    goBack(){
+      if (this.showDialog) {
+        this.set('showDialog', false);
+      } else if (this.showCurrentOutfit || this.showOutfitForm) {
+        this.setProperties({
+          showCurrentOutfit: false,
+          showOutfitForm: false
+        });
+      } else {
+        window.history.back();
+      }
+    },
+
+    addNewOutfit(){
+      this.setProperties({
+        showOutfitForm: true,
+        showCurrentOutfit: true,
+        currentOutfit: this.store.createRecord('outfit')
+      });
+    },
+
+    showOutfit(outfit){
+      this.set('currentOutfit', outfit);
+      this.set('showCurrentOutfit', true);
+    },
+
+    editOutfit(outfit){
+      this.setProperties({
+        showOutfitForm: true,
+        showCurrentOutfit: true,
+        currentOutfit: outfit
       });
     }
 
-  },
-
-  //functions
-  selectedOutfits: computed('cardSelectionToggled', 'model.id', function () {
-    return this.get('model.outfits').filterBy('isSelected');
-  })
+  }
 });

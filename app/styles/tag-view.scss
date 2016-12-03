@@ -1,11 +1,25 @@
 .tags {
   padding: 10px;
-  .tag {
+  .tag, .favorite {
     background: white;
     display: flex;
     margin: 5px;
+  }
+
+  .tag h3 {
+    margin: 25px auto;
+    text-transform: uppercase;
+
+  }
+
+  .favorite {
+    text-decoration: none;
+    md-icon {
+      margin-right: 5px;
+    }
     h3 {
-      margin: 25px auto;
+      margin: 25px auto 25px 0;
+      text-transform: uppercase;
     }
   }
 }
@@ -18,11 +32,12 @@
     width: 100%;
   }
 }
+
 .selectable {
   position: relative;
-  .selectable-mask{
+  .selectable-mask {
     position: absolute;
-    top:0;
+    top: 0;
     bottom: 0;
     width: 100%;
 

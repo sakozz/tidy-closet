@@ -2,6 +2,7 @@ import Ember from 'ember';
 import OutfitCtr from 'tidy-closet/mixins/outfit-ctr';
 const {
   inject,
+  computed,
   Controller
 } = Ember;
 
@@ -10,48 +11,13 @@ export default Controller.extend(OutfitCtr, {
   showCurrentOutfit: false,
   showOutfitForm: false,
 
-  selectedTag: Ember.computed.alias('model'),
-  tags: Ember.computed(function () {
+  tags: computed(function () {
     return this.store.peekAll('tag');
   }),
-  outfits: Ember.computed('model.id', function () {
+  selectedTag: computed.alias('model'),
+
+  outfits: computed('model.id', function () {
     return this.get('model.outfits');
-  }),
-  currentOutfit: Ember.computed(function () {
-    return this.store.createRecord('outfit');
-  }),
+  })
 
-  actions: {
-    addNewOutfit(){
-      this.setProperties({
-        showOutfitForm: true,
-        showCurrentOutfit: true,
-        currentOutfit: this.store.createRecord('outfit')
-      });
-    },
-    showOutfit(outfit){
-      this.set('currentOutfit', outfit);
-      this.set('showCurrentOutfit', true);
-    },
-    editOutfit(outfit){
-      this.setProperties({
-        showOutfitForm: true,
-        showCurrentOutfit: true,
-        currentOutfit: outfit
-      });
-    },
-    goBack(){
-      if (this.showDialog) {
-        this.set('showDialog', false);
-      } else if (this.showCurrentOutfit || this.showOutfitForm) {
-        this.setProperties({
-          showCurrentOutfit: false,
-          showOutfitForm: false
-        });
-      } else {
-        window.history.back();
-      }
-    }
-
-  }
 });

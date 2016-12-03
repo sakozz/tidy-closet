@@ -1,5 +1,10 @@
 {{partial 'tags-toolbar'}}
 <div class="tags grid">
+    <div class="col-xs-6 col-sm-4">
+      {{#link-to 'favorites'  class="favorite box-shadow-4"}}
+        {{paper-icon 'favorite'}} <h3>Favorites</h3>
+      {{/link-to}}
+    </div>
   {{#each tags as |tag|}}
       <div class="col-xs-6 col-sm-4">
         {{#link-to 'tags.show' tag tagName="div" class="tag box-shadow-4"}}
