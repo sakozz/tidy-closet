@@ -39,6 +39,18 @@ export default Controller.extend(OutfitCtr, {
         showCurrentOutfit: true,
         currentOutfit: outfit
       });
+    },
+    goBack(){
+      if (this.showDialog) {
+        this.set('showDialog', false);
+      } else if (this.showCurrentOutfit || this.showOutfitForm) {
+        this.setProperties({
+          showCurrentOutfit: false,
+          showOutfitForm: false
+        });
+      } else {
+        window.history.back();
+      }
     }
 
   }

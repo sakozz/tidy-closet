@@ -1,8 +1,8 @@
 import Ember from 'ember';
 const {
-  Route,
-  inject
-} = Ember;
+        Route,
+        inject
+      } = Ember;
 
 export default Route.extend({
   cordova: inject.service(),
@@ -18,25 +18,15 @@ export default Route.extend({
     });
   },
   activate () {
-    this.get('cordova').on('backbutton', this, 'goBack');
+    this.get('cordova').on('backbutton', this, 'triggerHardwareBack');
   },
 
   deactivate () {
-    this.get('cordova').off('backbutton', this, 'goBack');
+    this.get('cordova').off('backbutton', this, 'triggerHardwareBack');
   },
 
-  goBack(){
-    let ctrl = this.get('controller');
-    if(ctrl.showDialog){
-      ctrl.set('showDialog', false);
-    } else if(ctrl.showCurrentOutfit || ctrl.showOutfitForm){
-      ctrl.setProperties({
-        showCurrentOutfit: false,
-        showOutfitForm: false
-      });
-    }else{
-      window.history.back();
-    }
+  triggerHardwareBack(){
+    this.get('controller').send('goBack');
   }
 
 });
